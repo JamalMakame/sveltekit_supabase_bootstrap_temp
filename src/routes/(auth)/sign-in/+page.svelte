@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
+	import type { ActionData } from './$types';
 	import { toast } from 'svelte-french-toast';
-	import LOGO from '$lib/images/logo.png';
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 
-	let { data, form } = $props<{ data: PageData; form: ActionData | null }>();
+	let { form } = $props<{ form: ActionData | null }>();
 
 	// Form state variables
 	let loading = $state(false);
@@ -20,8 +20,7 @@
 					position: 'top-right'
 				});
 
-				// In a real app, you might want to redirect here
-				// window.location.href = '/dashboard';
+				goto('/dashboard');
 			} else if (form.error) {
 				toast.error(form.error, {
 					position: 'top-right'
