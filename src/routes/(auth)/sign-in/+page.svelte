@@ -5,30 +5,26 @@
 	import { enhance } from '$app/forms';
 
 	let { data, form } = $props<{ data: PageData; form: ActionData | null }>();
-	
+
 	// Form state variables
 	let loading = $state(false);
 	let username = $state('');
 	let password = $state('');
 	let rememberMe = $state(false);
-	
+
 	// Watch for form submission results
 	$effect(() => {
 		if (form) {
 			if (form.success) {
 				toast.success('Successfully logged in!', {
-					position: 'top-right',
-					duration: 3000,
-					style: 'border-radius: 10px; background: #48BB78; color: white;'
+					position: 'top-right'
 				});
-				
+
 				// In a real app, you might want to redirect here
 				// window.location.href = '/dashboard';
 			} else if (form.error) {
 				toast.error(form.error, {
-					position: 'top-right',
-					duration: 5000,
-					style: 'border-radius: 10px; background: #F56565; color: white;'
+					position: 'top-right'
 				});
 			}
 		}
@@ -52,13 +48,13 @@
 									<p class="text-center small">Enter your username & password to login</p>
 								</div>
 
-								<form 
-									class="row g-3 needs-validation" 
-									method="POST" 
+								<form
+									class="row g-3 needs-validation"
+									method="POST"
 									use:enhance={() => {
 										loading = true;
-										
-										return async ({ update }) => {
+
+										return async ({ update, result }) => {
 											await update();
 											loading = false;
 										};
@@ -113,7 +109,11 @@
 									<div class="col-12">
 										<button class="btn btn-primary w-100" type="submit" disabled={loading}>
 											{#if loading}
-												<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+												<span
+													class="spinner-border spinner-border-sm me-2"
+													role="status"
+													aria-hidden="true"
+												></span>
 												Logging in...
 											{:else}
 												Login
